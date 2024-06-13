@@ -29,11 +29,12 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable Long id, Authentication authentication) {
         Long userId = ((CustomUserDetails) authentication.getPrincipal()).getId();
-        if (!taskService.isUserOwner(id, userId)) {
-            return ResponseEntity.status(403).body("Você não tem permissão para excluir esta tarefa");
+        try {
+            taskService.deleteTask(id, userId);
+            return ResponseEntity.ok("Task excluída com sucesso!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(403).body(e.getMessage());
         }
-        taskService.deleteTask(id);
-        return ResponseEntity.ok("Task excluída com sucesso!");
     }
 
     @PutMapping("/{id}")

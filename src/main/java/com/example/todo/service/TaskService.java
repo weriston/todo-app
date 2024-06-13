@@ -2,6 +2,7 @@ package com.example.todo.service;
 
 import com.example.todo.model.Task;
 import com.example.todo.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @Service
 public class TaskService {
 
+    @Autowired
     private final TaskRepository taskRepository;
 
     public TaskService(TaskRepository taskRepository) {
@@ -19,7 +21,10 @@ public class TaskService {
         taskRepository.save(task);
     }
 
-    public void deleteTask(Long id) {
+    public void deleteTask(Long id, Long userId) {
+        if (!taskRepository.existsByIdAndUserId(id, userId)) {
+            throw new IllegalArgumentException("Você não tem permissão para excluir esta tarefa");
+        }
         taskRepository.deleteById(id);
     }
 
