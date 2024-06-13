@@ -5,6 +5,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class PasswordUtil {
     private static final PasswordEncoder encoder = new BCryptPasswordEncoder();
+    private static final String INVALID_PASSWORD_MESSAGE =
+            "Senha não corresponde aos requisitos mínimos de segurança. " +
+                    "A senha deve conter letras maiúsculas, minúsculas, números e pelo menos 1 caractere especial EX:!@#$%&*";
 
     public static String hashPassword(String password) {
         return encoder.encode(password);
@@ -15,14 +18,6 @@ public class PasswordUtil {
     }
 
     public static boolean validatePassword(String password) {
-        // Verifica se a senha atende aos critérios mínimos de segurança
-        // Critérios:
-        // - Pelo menos 8 caracteres
-        // - Contém pelo menos uma letra maiúscula
-        // - Contém pelo menos uma letra minúscula
-        // - Contém pelo menos um número
-        // - Contém pelo menos um caractere especial (!@#$%&*?)
-
         if (password == null || password.length() < 8) {
             return false;
         }
@@ -47,8 +42,11 @@ public class PasswordUtil {
         return hasUppercase && hasLowercase && hasNumber && hasSpecialChar;
     }
 
+    public static String getInvalidPasswordMessage() {
+        return INVALID_PASSWORD_MESSAGE;
+    }
+
     private static boolean isSpecialChar(char c) {
-        // Verifica se o caractere é um dos caracteres especiais permitidos
         return c == '!' || c == '@' || c == '#' || c == '$' || c == '%' || c == '&' || c == '*' || c == '?';
     }
 }

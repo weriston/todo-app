@@ -20,7 +20,7 @@ public class UserService {
         }
 
         if (!PasswordUtil.validatePassword(user.getPassword())) {
-            throw new IllegalArgumentException("Senha inválida");
+            throw new IllegalArgumentException(PasswordUtil.getInvalidPasswordMessage());
         }
 
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));

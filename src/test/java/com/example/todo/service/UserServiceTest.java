@@ -70,7 +70,8 @@ public class UserServiceTest {
         user.setEmail("joao@example.com");
         user.setPassword("invalidpassword");
 
-        assertThrows(IllegalArgumentException.class, () -> userService.createUser(user));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> userService.createUser(user));
+        assertEquals(PasswordUtil.getInvalidPasswordMessage(), exception.getMessage());
         verify(userRepository, never()).save(any(User.class));
     }
 }
