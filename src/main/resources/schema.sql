@@ -1,0 +1,15 @@
+CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE tasks (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    description VARCHAR(255) NOT NULL,
+    priority VARCHAR(50) NOT NULL,
+    completed BOOLEAN DEFAULT FALSE,
+    user_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);

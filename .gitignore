@@ -1,0 +1,16 @@
+# Compiled class file
+target/
+
+# IDE files
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Maven specific
+mvn_wrapper/
+
+# Application properties
+##src/main/resources/application.properties
+
