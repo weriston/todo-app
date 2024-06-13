@@ -37,17 +37,22 @@ Este é um projeto de exemplo para gerenciamento de tarefas (To-Do). O objetivo 
 1. **Clone o Repositório**
 
    ```bash
-   git clone https://github.com/weristonsp/nome-do-repositorio.git
-   cd nome-do-repositorio 
+   git clone https://github.com/weriston/todo-app.git 
 
-
+1. **Utilizando o IntelliJ New Project - Get from version control**
+**https://github.com/weriston/todo-app.git**
+**informe a branch develop**
+**ative o maven no projeto recem clonado e após compilar todo projeto, estará pronto iniciar**
+**abra o arquivo: src/main/java/com/example/todo/TodoApplication.java**
+**Selecione o menu Run TodoApplication**
+ 
 ## Configuração do Banco de Dados
 
 **O projeto utiliza o banco de dados H2 integrado para ambientes de desenvolvimento. Não são necessárias configurações adicionais para execução local.**
        
 ## Compilação e Execução
 
-1. **Compile o projeto usando Maven:**
+2. **Ou Compile o projeto usando Maven:**
 
    ```bash
    mvn clean package
