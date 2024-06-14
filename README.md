@@ -1,96 +1,132 @@
-# Projeto To-Do
+# Projeto TODO App
 
-Este é um projeto de exemplo para gerenciamento de tarefas (To-Do). O objetivo deste projeto é fornecer uma aplicação web que permita aos usuários gerenciar suas tarefas diárias de maneira eficiente. A aplicação inclui funcionalidades para registro de usuários, autenticação, criação, edição e exclusão de tarefas.
+Este é um projeto de aplicativo de gerenciamento de tarefas (TODO) desenvolvido em Java com Spring Boot. O objetivo é fornecer uma API REST para que os usuários possam criar, atualizar, excluir e listar suas tarefas.
 
 ## Funcionalidades
 
-- **Registro de Usuário**: Permite que novos usuários se registrem na aplicação.
-- **Autenticação**: Usuários podem fazer login para acessar suas tarefas.
-- **Gerenciamento de Tarefas**: Usuários podem criar, visualizar, editar e excluir tarefas.
-- **Documentação da API**: A API está documentada utilizando Swagger/OpenAPI.
-- **Execução em Ambiente Local e com Docker**: Instruções fornecidas para executar a aplicação localmente ou via Docker.
+- Cadastro de usuários
+- Login de usuários
+- Criação de tarefas
+- Atualização de tarefas
+- Exclusão de tarefas
+- Listagem de tarefas pendentes
+- Filtragem de tarefas por prioridade
 
 ## Regras de Uso
 
-1. **Registro de Usuário**:
-   - Acesse a rota `/users/register` para registrar um novo usuário.
-   - Forneça um nome de usuário, senha e outros detalhes solicitados.
-
-2. **Login**:
-   - Acesse a rota `/auth/login` para autenticar um usuário registrado.
-   - Forneça o nome de usuário e a senha para receber um token JWT.
-
-3. **Gerenciamento de Tarefas**:
-   - **Criar Tarefa**: Acesse a rota `/tasks` com o método POST, fornecendo os detalhes da tarefa.
-   - **Listar Tarefas**: Acesse a rota `/tasks` com o método GET para listar todas as tarefas do usuário autenticado.
-   - **Editar Tarefa**: Acesse a rota `/tasks/{id}` com o método PUT para editar uma tarefa existente.
-   - **Excluir Tarefa**: Acesse a rota `/tasks/{id}` com o método DELETE para excluir uma tarefa.
+- Apenas usuários autenticados podem acessar as funcionalidades do aplicativo, exceto o cadastro e o login.
+- Cada usuário só pode gerenciar suas próprias tarefas.
+- As senhas dos usuários são armazenadas de forma criptografada.
+- A autenticação é realizada por meio de token JWT (JSON Web Token).
+- O token de acesso expira após 15 minutos de inatividade.
 
 ## Pré-requisitos
 
-- Java JDK 17
+- JDK 17
 - Maven 3.x
 - Git
+- Banco de dados H2 (em memória)
 
-## Configuração do Ambiente Local
+## Como Baixar e Executar o Projeto
 
-1. **Clone o Repositório**
+### Clonando o Repositório via Linha de Comando
 
+1. Abra o terminal ou prompt de comando.
+2. Execute o seguinte comando para clonar o repositório:
    ```bash
    git clone https://github.com/weriston/todo-app.git 
-
-1. **Utilizando o IntelliJ New Project - Get from version control**
-**https://github.com/weriston/todo-app.git**
-**informe a branch develop**
-**ative o maven no projeto recem clonado e após compilar todo projeto, estará pronto iniciar**
-**abra o arquivo: src/main/java/com/example/todo/TodoApplication.java**
-**Selecione o menu Run TodoApplication**
- 
-## Configuração do Banco de Dados
-
-**O projeto utiliza o banco de dados H2 integrado para ambientes de desenvolvimento. Não são necessárias configurações adicionais para execução local.**
-       
-## Compilação e Execução
-
-2. **Ou Compile o projeto usando Maven:**
-
+3. Navegue até o diretório do projeto:
    ```bash
-   mvn clean package
-    
-2. **Execute a aplicação:**
+   cd todo-app 
 
+### Baixando o Projeto via IntelliJ IDEA
+
+1. Abra o IntelliJ IDEA.
+2. Clique em "File" -> "New" -> "Project from Version Control".
+3. Selecione "Git" como o sistema de controle de versão.
+4. Insira a URL do repositório: `https://github.com/weriston/todo-app.git`
+5. Escolha o diretório onde deseja salvar o projeto.
+6. Clique em "Clone".
+
+### Executando o Projeto
+
+1. Abra o projeto no IntelliJ IDEA.
+2. Aguarde o download das dependências do Maven.
+3. Localize a classe `TodoApplication` no pacote `com.example.todo`.
+4. Clique com o botão direito do mouse na classe e selecione "Run 'TodoApplication'".
+5. O aplicativo será iniciado e estará disponível em `http://localhost:8080`.
+
+## Segurança
+
+- A autenticação é realizada por meio de token JWT.
+- As senhas dos usuários são armazenadas de forma criptografada usando o algoritmo BCrypt.
+- Apenas usuários autenticados podem acessar as funcionalidades protegidas da API.
+- O token de acesso expira após 15 minutos de inatividade, exigindo que o usuário faça login novamente.
+
+## Banco de Dados
+
+- O projeto utiliza o banco de dados H2, que é um banco de dados em memória.
+- As tabelas e os dados iniciais são criados automaticamente ao iniciar a aplicação.
+- Não é necessário configurar um banco de dados externo.
+
+## Usando o Docker (Opcional)
+
+1. Certifique-se de ter o Docker instalado em sua máquina.
+2. Abra o terminal na raiz do projeto.
+3. Execute o seguinte comando para criar a imagem Docker:
    ```bash
-   java -jar target/todo.jar
-   
-3. **Acesse a API localmente em http://localhost:8080.**
-   
+   docker build -t todo-app . 
+4. Após a conclusão do build, execute o seguinte comando para iniciar o contêiner:
+   ```bash
+   docker run -p 8080:8080 todo-app
+5. A aplicação estará disponível em `http://localhost:8080`.
+
+## Testando a Aplicação
+
+Para testar as funcionalidades da aplicação, você pode usar ferramentas como o Postman ou o cURL. Aqui estão alguns exemplos de requisições:
+
+### Cadastro de Usuário
+- POST /users Content-Type: application/json
+   ```bash
+   { "name": "João Silva", "email": "joao.silva@example.com", "password": "Password@123" }
+
+### Login
+- POST /auth/login Content-Type: application/json
+   ```bash
+   { "email": "joao.silva@example.com", "password": "Password@123" }
+- O login retornará um token JWT que deve ser incluído no cabeçalho `Authorization` das requisições subsequentes.
+
+### Criação de Tarefa
+- POST /tasks Content-Type: application/json Authorization: Bearer {token}
+   ```bash
+   { "description": "Comprar leite", "priority": "ALTA" }
+
+### Listagem de Tarefas Pendentes
+- GET /tasks?completed=false Authorization: Bearer {token}
+
+### Marcar Tarefa como Concluída
+- PUT /tasks/{id}/complete Authorization: Bearer {token}
+- Substitua `{id}` pelo ID da tarefa que deseja marcar como concluída.
+- Esses são apenas alguns exemplos de requisições. Para obter a lista completa de endpoints disponíveis, consulte a documentação da API em `http://localhost:8080/swagger-ui.html`.
+
+## Contribuindo
+- Se você deseja contribuir para o projeto ToDo App, siga estas etapas:
+
+1. Faça um fork do repositório.
+2. Crie uma branch para sua feature ou correção de bug: `git checkout -b minha-feature`.
+3. Faça as alterações necessárias e adicione os commits: `git commit -m 'Minha nova feature'`.
+4. Envie as alterações para o seu fork: `git push origin minha-feature`.
+5. Abra um pull request no repositório original.
+
+Agradecemos antecipadamente por suas contribuições!
+
 ## Documentação da API
 
-**A documentação da API está disponível através do Swagger/OpenAPI em http://localhost:8080/swagger-ui.html.**
+- A documentação da API é gerada automaticamente usando o Swagger.
+- Após iniciar a aplicação, acesse `http://localhost:8080/swagger-ui.html` para visualizar a documentação.
 
-## Execução com Docker (Opcional)
-
-1. **Caso prefira executar com Docker, certifique-se de ter o Docker instalado e execute o seguinte comando:**
-
-   ```bash
-   docker-compose up
-
-**Isso iniciará a aplicação junto com o banco de dados configurado no Docker.**
-
-# Segurança Aplicada
- 
-**O projeto To-Do utiliza a segurança Spring Security para proteger as rotas da aplicação. A seguir estão os principais pontos da configuração de segurança:**
-1. **Autenticação JWT: A aplicação utiliza JSON Web Tokens (JWT) para autenticação. Após o login bem-sucedido, um token JWT é gerado e deve ser incluído no cabeçalho de autorização (Authorization: Bearer <token>) para acessar rotas protegidas.**
-2. **Filtros de Segurança: Um filtro JWT personalizado (JwtRequestFilter) é adicionado para interceptar requisições e validar o token JWT antes de permitir o acesso aos recursos.**
-3. **Configuração de Segurança: As rotas de autenticação (/auth/**) e registro de usuário (/users/register) são publicamente acessíveis, enquanto todas as outras rotas exigem autenticação. A política de sessão é configurada como STATELESS para garantir que a aplicação não mantenha sessões de usuário no servidor.**
-4. **Codificação de Senhas: As senhas dos usuários são codificadas usando BCrypt antes de serem armazenadas no banco de dados, garantindo que as senhas sejam armazenadas de forma segura.**
-5. **Cross-Site Request Forgery (CSRF): A proteção CSRF é desativada para simplificação do desenvolvimento, mas pode ser habilitada e configurada conforme necessário em ambientes de produção.**
-
-## Notas Adicionais
-
-**As informações de propriedades tutilizadas estão consolidadas no arquivo application.properties.**
-
+Esperamos que este projeto atenda às suas expectativas e demonstre nossas habilidades como desenvolvedores backend. Estamos à disposição para quaisquer esclarecimentos adicionais.
 
 ## Licença
 
-**Este projeto está licenciado sob a MIT License. Maiores informações contacte: weristonsp@gmail.com**
+**Este projeto está licenciado sob a MIT License. Maiores informações entre em contato com: weristonsp@gmail.com**
