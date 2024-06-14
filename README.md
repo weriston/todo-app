@@ -125,7 +125,7 @@ Agradecemos antecipadamente por suas contribuições!
 - A documentação da API é gerada automaticamente usando o Swagger.
 - Após iniciar a aplicação, acesse `http://localhost:8080/swagger-ui.html` para visualizar a documentação.
 
-Esperamos que este projeto atenda às suas expectativas e demonstre nossas habilidades como desenvolvedores backend. Estamos à disposição para quaisquer esclarecimentos adicionais.
+Esperamos que este projeto atenda às suas expectativas, explorando algumas das principais habilidades de backend. Qualquer dúvida adicional estamos a disposição.
 
 ## Licença
 
